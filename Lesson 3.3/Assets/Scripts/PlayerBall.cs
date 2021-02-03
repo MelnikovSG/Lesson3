@@ -4,9 +4,9 @@ namespace RollBall
 {
     public sealed class PlayerBall : Player
     {
-        private void FixedUpdate()
+        public PlayerBall(float speed) : base(speed)
         {
-            Move();
+            
         }
     }
 }
