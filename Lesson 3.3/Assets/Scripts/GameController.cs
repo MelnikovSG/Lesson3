@@ -4,28 +4,37 @@ namespace RollBall
 { 
     public class GameController : MonoBehaviour
     {
-        private ListExecuteObject _interactiveObject;
+        private InteractiveObject[] _interactiveObjects;
 
         private void Awake()
         {
-            _interactiveObject = new ListExecuteObject();
+            _interactiveObjects = FindObjectsOfType<InteractiveObject>();
         }
 
         private void Update()
         {
-            for (var i = 0; i < _interactiveObject.Length; i++)
+            for (var i = 0; i < _interactiveObjects.Length; i++)
             {
-                var interactiveObject = _interactiveObject[i];
-
+                var interactiveObject = _interactiveObjects[i]; 
+ 
                 if (interactiveObject == null)
                 {
                     continue;
                 }
-                interactiveObject.Execute();
+
+                if (interactiveObject is IFlay flay)
+                {
+                    flay.Flay();
+                }
+                if (interactiveObject is IFlicker flicker)
+                {
+                    flicker.Flicker();
+                }
+                if (interactiveObject is IRotation rotation)
+                {
+                    rotation.Rotation();
+                }
             }
-        }
     }
-
-
 }
 
