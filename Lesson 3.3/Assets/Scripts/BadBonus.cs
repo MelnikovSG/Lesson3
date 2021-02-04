@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Geekbrains
+namespace RollBall
 {
     public sealed class BadBonus : InteractiveObject, IFlay, IRotation
     {
