@@ -18,9 +18,15 @@ namespace RollBall
             _finishGameLabel.text = String.Empty;
         }
 
-        public void DisplayOn()
+        public void CreateDisplay()
         {
             _displayEndGame = new DisplayEndGame(_reference.EndGame);
+            _reference.EndGame.gameObject.SetActive(false);
+        }
+
+        public void DisplayOn()
+        {
+            _reference.EndGame.gameObject.SetActive(true);
         }
 
 

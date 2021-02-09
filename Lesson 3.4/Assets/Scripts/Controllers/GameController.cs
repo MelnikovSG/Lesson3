@@ -23,23 +23,24 @@ namespace RollBall
 
             _reference = new Reference();
 
-            PlayerBase player = null;
+            PlayerBase _player = null;
             if (PlayerType == PlayerType.Ball)
             {
-                player = _reference.PlayerBall;
+                _player = _reference.PlayerBall;
             }
 
-            _cameraController = new CameraController(player.transform, _reference.MainCamera.transform);
+            _cameraController = new CameraController(_player.transform, _reference.MainCamera.transform);
             _interactiveObject.AddExecuteObject(_cameraController);
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                _inputController = new InputController(player);
+                _inputController = new InputController(_player);
                 _interactiveObject.AddExecuteObject(_inputController);
             }
 
-           
-            _displayBonuses = new DisplayBonuses(_reference.Bonuse);
+            _displayEndGame.CreateDisplay();
+            _displayBonuses.CreateDisplay();
+
             foreach (var o in _interactiveObject)
             {
                 if (o is BadBonus badBonus)
@@ -81,6 +82,11 @@ namespace RollBall
                     continue;
                 }
                 interactiveObject.Execute();
+            }
+
+            if(GameObject.Find("Player") == null)
+            {
+                _displayEndGame.DisplayOn();
             }
         }
 
