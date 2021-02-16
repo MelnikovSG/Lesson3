@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
+
+namespace RollBall
 {
     public sealed class CameraController : IExecute
     {

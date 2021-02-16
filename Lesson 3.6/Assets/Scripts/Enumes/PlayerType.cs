@@ -1,4 +1,6 @@
-﻿namespace Geekbrains
+﻿
+
+namespace RollBall
 {
     public enum PlayerType
     {

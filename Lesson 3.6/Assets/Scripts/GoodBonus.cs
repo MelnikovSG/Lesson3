@@ -2,21 +2,22 @@
 using UnityEngine;
 using static UnityEngine.Random;
 
-namespace Geekbrains
+
+namespace RollBall
 {
-    public sealed class GoodBonus : InteractiveObject, IFlay, IFlicker
+    public sealed class GoodBonus : InteractiveObject, IFly, IFlicker
     {
         public int Point;
-        public event Action<int> OnPointChange = delegate(int i) {  };
+        public event Action<int> OnPointChange = delegate (int i) { };
         private Material _material;
         private float _lengthFlay;
 
-        private void Awake()
+        public void Awake()
         {
             _material = GetComponent<Renderer>().material;
             _lengthFlay = Range(1.0f, 5.0f);
         }
-        
+
         protected override void Interaction()
         {
             OnPointChange.Invoke(Point);
@@ -24,18 +25,18 @@ namespace Geekbrains
 
         public override void Execute()
         {
-            if(!IsInteractable){return;}
-            Flay();
+            if (!IsInteractable) { return; }
+            Fly();
             Flicker();
         }
 
-        public void Flay()
+        public void Fly()
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, 
+                transform.localPosition = new Vector3(transform.localPosition.x, 
                 Mathf.PingPong(Time.time, _lengthFlay),
                 transform.localPosition.z);
         }
-
+        
         public void Flicker()
         {
             _material.color = new Color(_material.color.r, _material.color.g, _material.color.b,
@@ -43,3 +44,4 @@ namespace Geekbrains
         }
     }
 }
+

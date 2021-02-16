@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
+
+namespace RollBall
 {
     public sealed class PlayerBall : PlayerBase
     {
@@ -10,7 +11,7 @@ namespace Geekbrains
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
-        
+
         public override void Move(float x, float y, float z)
         {
             _rigidbody.AddForce(new Vector3(x, y, z) * Speed);

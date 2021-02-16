@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
+
+namespace RollBall
 {
     public abstract class PlayerBase : MonoBehaviour
     {

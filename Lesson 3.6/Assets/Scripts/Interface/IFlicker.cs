@@ -1,7 +1,9 @@
-﻿namespace Geekbrains
+﻿
+
+namespace RollBall
 {
     public interface IFlicker
     {
-        void Flicker();
+            void Flicker();
     }
 }

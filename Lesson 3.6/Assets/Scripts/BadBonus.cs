@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using UnityEngine;
 using static UnityEngine.Random;
 
-namespace Geekbrains
+
+namespace RollBall
 {
-    public sealed class BadBonus : InteractiveObject, IFlay, IRotation
+    public sealed class BadBonus : InteractiveObject, IFly, IRotation
     {
-        public event Action<string, Color> OnCaughtPlayerChange = delegate(string str, Color color) {  };
+        public event Action<string, Color> OnCaughtPlayerChange = delegate (string str, Color color) { };
         private float _lengthFlay;
         private float _speedRotation;
 
@@ -19,18 +20,16 @@ namespace Geekbrains
         protected override void Interaction()
         {
             OnCaughtPlayerChange.Invoke(gameObject.name, _color);
-            
-            Destroy(gameObject);
         }
 
         public override void Execute()
         {
-            if(!IsInteractable){return;}
-            Flay();
+            if (!IsInteractable) { return; }
+            Fly();
             Rotation();
         }
 
-        public void Flay()
+        public void Fly()
         {
             transform.localPosition = new Vector3(transform.localPosition.x, 
                 Mathf.PingPong(Time.time, _lengthFlay),

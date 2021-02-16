@@ -1,6 +1,8 @@
-﻿namespace Geekbrains
+﻿
+
+namespace RollBall
 {
-    public interface IExecute
+    public interface IExecute 
     {
         void Execute();
     }

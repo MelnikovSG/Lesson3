@@ -1,7 +1,9 @@
-﻿namespace Geekbrains
+﻿
+
+namespace RollBall
 {
-	public interface IInitialization
-	{
-		void Initialization();
-	}
+    public interface IInitialization 
+    {
+        void Action();
+    }
 }

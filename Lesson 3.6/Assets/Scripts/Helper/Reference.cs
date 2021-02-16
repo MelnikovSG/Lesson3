@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Geekbrains
+
+namespace RollBall
 {
-    public sealed class Reference
+    public class Reference : MonoBehaviour
     {
         private PlayerBall _playerBall;
         private Camera _mainCamera;
@@ -21,24 +22,8 @@ namespace Geekbrains
                     var gameObject = Resources.Load<Button>("UI/RestartButton");
                     _restartButton = Object.Instantiate(gameObject, Canvas.transform);
                 }
-                
-                return _restartButton;
-            }
-        }
-        
-        //....
 
-        public PlayerBall PlayerBall
-        {
-            get
-            {
-                if (_playerBall == null)
-                {
-                    var gameObject = Resources.Load<PlayerBall>("Player");
-                    _playerBall = Object.Instantiate(gameObject);
-                }
-                
-                return _playerBall;
+                return _restartButton;
             }
         }
 
@@ -63,7 +48,7 @@ namespace Geekbrains
                     var gameObject = Resources.Load<GameObject>("UI/Bonuse");
                     _bonuse = Object.Instantiate(gameObject, Canvas.transform);
                 }
-                
+
                 return _bonuse;
             }
         }
@@ -77,8 +62,22 @@ namespace Geekbrains
                     var gameObject = Resources.Load<GameObject>("UI/EndGame");
                     _endGame = Object.Instantiate(gameObject, Canvas.transform);
                 }
-                
+
                 return _endGame;
+            }
+        }
+
+        public PlayerBall PlayerBall
+        {
+            get
+            {
+                if (_playerBall == null)
+                {
+                    var gameObject = Resources.Load<PlayerBall>("Player");
+                    _playerBall = Object.Instantiate(gameObject).GetComponent<PlayerBall>();
+                }
+
+                return _playerBall;
             }
         }
 

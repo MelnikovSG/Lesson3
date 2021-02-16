@@ -1,8 +1,8 @@
 ﻿using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
-namespace Geekbrains
+namespace RollBall
 {
     public sealed class GameController : MonoBehaviour, IDisposable
     {
@@ -14,30 +14,33 @@ namespace Geekbrains
         private InputController _inputController;
         private int _countBonuses;
         private Reference _reference;
+        private Restart _restart;
+
 
         private void Awake()
         {
             _interactiveObject = new ListExecuteObject();
-            
+
             _reference = new Reference();
 
-            PlayerBase player = null;
+            PlayerBase _player = null;
             if (PlayerType == PlayerType.Ball)
             {
-                player = _reference.PlayerBall;
+                _player = _reference.PlayerBall;
             }
-            
-            _cameraController = new CameraController(player.transform, _reference.MainCamera.transform);
+
+            _cameraController = new CameraController(_player.transform, _reference.MainCamera.transform);
             _interactiveObject.AddExecuteObject(_cameraController);
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                _inputController = new InputController(player);
+                _inputController = new InputController(_player);
                 _interactiveObject.AddExecuteObject(_inputController);
             }
 
-            _displayEndGame = new DisplayEndGame(_reference.EndGame);
-            _displayBonuses = new DisplayBonuses(_reference.Bonuse);
+            _displayEndGame.CreateDisplay();
+            _displayBonuses.CreateDisplay();
+
             foreach (var o in _interactiveObject)
             {
                 if (o is BadBonus badBonus)
@@ -45,21 +48,15 @@ namespace Geekbrains
                     badBonus.OnCaughtPlayerChange += CaughtPlayer;
                     badBonus.OnCaughtPlayerChange += _displayEndGame.GameOver;
                 }
-                
+
                 if (o is GoodBonus goodBonus)
                 {
                     goodBonus.OnPointChange += AddBonuse;
                 }
             }
-            
-            _reference.RestartButton.onClick.AddListener(RestartGame);
-            _reference.RestartButton.gameObject.SetActive(false);
-        }
 
-        private void RestartGame()
-        {
-            SceneManager.LoadScene(sceneBuildIndex: 0); 
-            Time.timeScale = 1.0f;
+            _reference.RestartButton.onClick.AddListener(_restart.RestartGame);
+            _reference.RestartButton.gameObject.SetActive(false);
         }
 
         private void CaughtPlayer(string value, Color args)
@@ -86,6 +83,11 @@ namespace Geekbrains
                 }
                 interactiveObject.Execute();
             }
+
+            if(GameObject.Find("Player") == null)
+            {
+                _displayEndGame.DisplayOn();
+            }
         }
 
         public void Dispose()
@@ -97,7 +99,7 @@ namespace Geekbrains
                     badBonus.OnCaughtPlayerChange -= CaughtPlayer;
                     badBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
                 }
-            
+
                 if (o is GoodBonus goodBonus)
                 {
                     goodBonus.OnPointChange -= AddBonuse;
