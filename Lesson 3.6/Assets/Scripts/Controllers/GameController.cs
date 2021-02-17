@@ -15,6 +15,7 @@ namespace RollBall
         private int _countBonuses;
         private Reference _reference;
         private Restart _restart;
+        private Radar _radar;
 
 
         private void Awake()
@@ -57,6 +58,10 @@ namespace RollBall
 
             _reference.RestartButton.onClick.AddListener(_restart.RestartGame);
             _reference.RestartButton.gameObject.SetActive(false);
+
+            _radar = new Radar();
+            _radar._playerPos = Camera.main.transform;
+
         }
 
         private void CaughtPlayer(string value, Color args)
@@ -87,6 +92,11 @@ namespace RollBall
             if(GameObject.Find("Player") == null)
             {
                 _displayEndGame.DisplayOn();
+            }
+
+            if (Time.frameCount % 2 == 0)
+            {
+                _radar.DrawRadarDots();
             }
         }
 
